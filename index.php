@@ -1,9 +1,9 @@
 <?php
-function isGuest(bool $value=false)
-{
-    # code...
-    return false||$value;
-}
+// function isGuest(bool $value=false)
+// {
+//     # code...
+//     return false||$value;
+// }
 
 $categories = [
     ['id'=>1, 'name'=>'Computer', 'parent_id'=>0, 'sort_order'=>0, 'status'=>1 ],
@@ -53,6 +53,6 @@ error_reporting(E_ALL);
 //Запускаем сессию
 session_start();
 // Поключение файлов системы
-define('ROOT', dirname(__FILE__));
-
+//define('ROOT', dirname(__FILE__));
+require_once(dirname(__FILE__) . '/config/config.php');
 require_once(ROOT . '/views/index/index.php');

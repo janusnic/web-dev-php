@@ -1,4 +1,4 @@
-
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/config/config.php'); ?>
     <div id="footer">
         <p id='copy'>&copy; Shopaholic 2017<p>
     </div>
@@ -52,6 +52,29 @@
         });
         $('.Top').click(function () {
             $('html,body').stop().animate({ scrollTop: 0 });
+        });
+
+        $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+            var $this = $(this), label = $this.prev('label');
+            if (e.type === 'keyup') {
+                if ($this.val() === '') {
+                    label.removeClass('active highlight');
+                } else {
+                    label.addClass('active highlight');
+                }
+            } else if (e.type === 'blur') {
+                if ($this.val() === '') {
+                    label.removeClass('active highlight');
+                } else {
+                    label.removeClass('highlight');
+                }
+            } else if (e.type === 'focus') {
+                if ($this.val() === '') {
+                    label.removeClass('highlight');
+                } else if ($this.val() !== '') {
+                    label.addClass('highlight');
+                }
+            }
         });
 
     });

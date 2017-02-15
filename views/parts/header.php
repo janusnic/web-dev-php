@@ -1,3 +1,4 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/config/config.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,14 +31,13 @@
           </a>
         </div>
     </header>
-
     <nav id="main-nav">
         <ul>
-            <li><a href="#" class="current">Home</a></li>
+            <li><a href="/" class="current">Home</a></li>
             <li class="drop-down"><a href="#">Catalog</a></li>
             <?php if(isGuest() === false):?>
-                <li><a href="#">SignUp</a></li>
-                <li><a href="#">LogIn</a></li>
+                <li><a href="/views/user/index.php">SignUp</a></li>
+                <li><a href="/views/user/login.php">LogIn</a></li>
             <?php else:?>
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">LogOut</a></li>
