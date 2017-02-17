@@ -84,7 +84,7 @@ header {
     left: 0;
 }
 #close-menu a {
-  background: transparent url("/images/remove-item.svg") no-repeat center center;
+  background: transparent url("/assets/images/remove-item.svg") no-repeat center center;
   width: 60px;
   height: 100%;
 }
@@ -344,7 +344,7 @@ header a.cart-link.active span.cart-quantity {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: url("../images/remove-item.svg") no-repeat center center;
+  background: url("/assets/images/remove-item.svg") no-repeat center center;
 }
 .no-touch #cart .item-remove:hover {
   background-color: #e0e6ef;

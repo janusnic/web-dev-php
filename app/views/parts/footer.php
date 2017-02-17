@@ -1,4 +1,3 @@
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/config/config.php'); ?>
     <div id="footer">
         <p id='copy'>&copy; Shopaholic 2017<p>
     </div>
@@ -52,6 +51,14 @@
         });
         $('.Top').click(function () {
             $('html,body').stop().animate({ scrollTop: 0 });
+        });
+
+        $('.drop-down').on('click', function () {
+            $('.mega-menu').toggleClass('speed-in');
+        });
+
+        $('#close-menu').on('click', function () {
+            $('.mega-menu').removeClass('speed-in');
         });
 
         $('.form').find('input, textarea').on('keyup blur focus', function (e) {
