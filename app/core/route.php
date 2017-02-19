@@ -40,6 +40,15 @@ foreach ($routes as $uriPattern => $path) {
             include_once($controllerFile);
             $result = true;
             }
+        // создаем контроллер
+    	$controller = new $controllerName;
+    	$action = $actionName;
+
+    	if(method_exists($controller, $action))
+    		{
+    			// вызываем действие контроллера
+    			$controller->$action();
+    		}
 
         if($result !== null)
             break;

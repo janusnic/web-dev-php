@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * Class Router маршрутизатор
+ */
+class Router {
+
+    /**
+     * @return string текущий адрес запроса
+     */
+    private static function getURI(){
+        if (isset($_SERVER['REQUEST_URI']) and !empty($_SERVER['REQUEST_URI']))
+            return trim($_SERVER['REQUEST_URI'], '/');
+    }
+
+    public static function start(){
+        /**
+         * Router constructor подключает маршруты
+         */
+        $routesPath = ROOT . "/app/core/config/routes.php";
+        $routes = include($routesPath);
+        //получаем строку запроса
+        $uri = Router::getURI();
+
+        // Проверить наличие такого запроса в routes.php
+        foreach ($routes as $uriPattern => $path) {
+
+            //Сравниваем uriPattern и $uri
+            if(preg_match("~$uriPattern~", $uri)){
+
+                // Получаем внутренний путь из внешнего согласно правилу
+                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
+
+                // Определить контроллер, action, параметры
+                $segments = explode('/', $internalRoute);
+
+                $controllerName = array_shift($segments) . 'Controller';
+                $controllerName = ucfirst($controllerName);
+
+                $actionName = 'action' . ucfirst(array_shift($segments));
+
+                $parameters = $segments;
+
+                //Подключаем файл контроллера
+                $controllerFile = ROOT . "/app/controllers/" . $controllerName . ".php";
+
+                if(file_exists($controllerFile)){
+                    include_once($controllerFile);
+                    $result = true;
+                    }
+
+                // создаем контроллер
+            	$controller = new $controllerName;
+            	$action = $actionName;
+
+            	if(method_exists($controller, $action))
+            		{
+            			// вызываем действие контроллера
+            			$controller->$action();
+            		}
+
+                if($result !== null)
+                    break;
+            }
+        }
+    }
+}

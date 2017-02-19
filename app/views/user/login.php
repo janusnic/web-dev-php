@@ -2,9 +2,9 @@
 include (ROOT. '/app/views/parts/header.php');
 ?>
 <main>
-    <?php if (isset($errors) && is_array($errors)):?>
+    <?php if (isset($this->errors) && is_array($this->errors)):?>
         <ul class="errors">
-            <?php foreach($errors as $error):?>
+            <?php foreach($this->errors as $error):?>
                 <li> - <?php echo $error;?></li>
             <?php endforeach;?>
         </ul>

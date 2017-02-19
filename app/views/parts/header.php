@@ -32,6 +32,7 @@
 
         <!-- Mega Menu -->
         <?php
+
         $categories = [
             ['id'=>1, 'name'=>'Computer', 'parent_id'=>0, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
             ['id'=>2, 'name'=>'Laptops', 'parent_id'=>1, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
@@ -103,8 +104,9 @@
     <nav id="main-nav">
         <ul>
             <li><a href="/" class="current">Home</a></li>
+            <li><a href="/about" class="">About</a></li>
             <li class="drop-down"><a href="#">Catalog</a></li>
-            <?php if(isGuest(true) === true):?>
+            <?php if(User::isGuest()):?>
                 <li><a href="/user/signup">SignUp</a></li>
                 <li><a href="/user/login">LogIn</a></li>
             <?php else:?>

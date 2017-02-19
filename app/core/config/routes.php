@@ -9,6 +9,11 @@ return array(
 
     //Выход
     'user/logout' => 'user/logout',
+    // profile
+    'profile' => 'profile/index',
+
+    // about
+    'about' => 'about/index',
 
     //Главаня страница
     'index.php' => 'index/index', //вызываем actionIndex в IndexController
