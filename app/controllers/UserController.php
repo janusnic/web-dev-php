@@ -2,18 +2,20 @@
 /**
  * Class UserController для работы с пользователем
  */
-
-class UserController {
+ class UserController extends Controller {
 
     // define variables and set to empty values
-    private $result = false;
-    private $name = '';
-    private $lname = '';
-    private $email = '';
-    private $password = '';
+    protected $result = false;
+    protected $name = '';
+    protected $lname = '';
+    protected $email = '';
+    protected $password = '';
     //Флаг ошибок
-    private $errors = false;
+    public $errors = false;
 
+    public function __construct(){
+        parent::__construct();
+    }
 
     protected function checkEmail($email) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -63,9 +65,12 @@ class UserController {
                 header("Location: /profile"); //перенаправляем в личный кабинет
             }
         }
-        require_once(ROOT . '/app/views/user/login.php');
 
-        return true;
+        $data['title'] = 'Login Page ';
+        $this->_view->rendertemplate('header',$data);
+        $this->_view->render('user/login',$data);
+        $this->_view->rendertemplate('footer',$data);
+
     }
 
         /**
@@ -75,13 +80,13 @@ class UserController {
          */
         public function actionSignup() {
 
+        $this->name = '';
 
         if (isset($_POST) and (!empty($_POST))) {
             $this->name = trim(strip_tags($_POST['name']));
             $this->lname = trim(strip_tags($_POST['lname']));
             $this->email = trim(strip_tags($_POST['email']));
             $this->password = trim(strip_tags($_POST['password']));
-
 
         //Валидация полей
         if (!$this->checkName($this->name)) {
@@ -97,13 +102,15 @@ class UserController {
         }
 
          if ($this->errors == false) {
-
              $this->result = true;
          }
         }
 
-        require_once(ROOT . '/app/views/user/signup.php');
-        return true;
+        $data['title'] = 'Signup Page ';
+        $this->_view->rendertemplate('header',$data);
+        $this->_view->render('user/signup',$data);
+        $this->_view->rendertemplate('footer',$data);
+
     }
     /**
      * Выход из учетной записи

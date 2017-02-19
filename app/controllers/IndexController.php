@@ -4,11 +4,18 @@
  * Class IndexController
  * Контроллер главной страницы
  */
-class IndexController {
-    public function actionIndex () {
+class IndexController extends Controller {
 
-        require_once(ROOT . '/app/views/index/index.php');
-
-        return true;
+    public function __construct(){
+        parent::__construct();
     }
+
+    public function actionIndex () {
+        $data['title'] = 'Welcome To ';
+        $this->_view->rendertemplate('header',$data);
+        $this->_view->render('index/index',$data);
+        $this->_view->rendertemplate('footer',$data);
+
+    }
+
 }

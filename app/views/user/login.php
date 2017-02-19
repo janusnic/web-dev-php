@@ -1,7 +1,3 @@
-<?php
-include (ROOT. '/app/views/parts/header.php');
-?>
-<main>
     <?php if (isset($this->errors) && is_array($this->errors)):?>
         <ul class="errors">
             <?php foreach($this->errors as $error):?>
@@ -39,10 +35,3 @@ include (ROOT. '/app/views/parts/header.php');
                   </div><!-- content -->
 
             </div> <!-- /form -->
-
-    </main>
-
-<?php
-include (ROOT . '/app/views/parts/cart.php');
-include (ROOT . '/app/views/parts/footer.php');
-?>

@@ -4,11 +4,16 @@
  * Class ProfileController
  * Контроллер Profile страницы
  */
-class ProfileController {
-    public function actionIndex () {
+ class ProfileController extends Controller {
 
-        require_once(ROOT . '/app/views/profile/index.php');
+         public function __construct(){
+             parent::__construct();
+         }
 
-        return true;
-    }
-}
+         public function actionIndex () {
+             $data['title'] = 'Welcome To ';
+             $this->_view->rendertemplate('header',$data);
+             $this->_view->render('profile/index',$data);
+             $this->_view->rendertemplate('footer',$data);
+         }
+ }
