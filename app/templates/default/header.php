@@ -63,11 +63,16 @@
 	        	// Creates list of all items with children
 	        	$menus['parents'][$items['parent_id']][] = $items['id'];
 	        }
-	        // var_dump($menus);
+
 	        // Print all tree view menus
-	        echo "<div class='mega-menu fadeIn animated' id='mega_menu'><div class='mm-3column'><span class='left-images'><img  src=<?php echo url::get_template_path();?>assets/images/4.jpg><p><a href='#'>Most Popular Styles </a></p></span></div><div id='close-menu'><a class='img-replace' href='#'>Menu</a></div>";
-	        echo createTreeView(0, $menus);
-	        echo '</div>';
+
+	        echo "<div class='fadeIn animated' id='mega_menu'>";
+
+			echo '<ul class="mega-menu">';
+
+			echo createTreeView(0, $menus);
+
+			echo '</ul></div>';
 
 	        // function to create dynamic treeview menus
 
@@ -75,22 +80,16 @@
 	           $html = "";
 
 	           if (isset($menu['parents'][$parent])) {
-	               $html .= "
-	               <ul class='default submenu'>";
-
 	               foreach ($menu['parents'][$parent] as $itemId) {
 	                  if(!isset($menu['parents'][$itemId])) {
 	                      $html .= "<li><a href='".$menu['items'][$itemId]['link']."'>".$menu['items'][$itemId]['name']."</a></li>";
 	                  }
-	              $html .= "</ul>";
 
 	                  if(isset($menu['parents'][$itemId])) {
-	                      $html .= "
-	                      <div class='mm-3column'><span class='categories-list'>";
-	                     $html .= "<span class='link'><i class='fa fa-mobile'></i>&nbsp;<a  href='".$menu['items'][$itemId]['link']."'>".$menu['items'][$itemId]['name']."</a></span>";
-
+	                      $html .= "<li><a  href='".$menu['items'][$itemId]['link']."'>".$menu['items'][$itemId]['name']."</a><ul class='mega-menu-inner'>";
 	                     $html .= createTreeView($itemId, $menu);
-	                     $html .= "</span></div>";
+	                     $html .= "</li>";
+						 $html .= "</ul>";
 	                  }
 	               }
 	           }
@@ -99,6 +98,7 @@
 	        }
 	         ?>
 	        <!-- Mega Menu -->
+
 	    </header>
 	    <nav id="main-nav">
 	        <ul>

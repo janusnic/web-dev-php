@@ -12,5 +12,5 @@ require_once 'models/User.php';
 
 
 $app = new Bootstrap();
-$app->setTemplate('default');
+//$app->setTemplate('default');
 $app->init();

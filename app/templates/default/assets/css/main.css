@@ -557,28 +557,137 @@ main {
   animation: fade-in 0.3s;
 }
 
-.mega-menu {
-    background: none repeat scroll 0 0 #fff;
-    z-index: 10;
-    top: 90px;
-    position: absolute;
-    width: 90%;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-	padding: 15px;
-    text-align: left;
-	display: none;
-	transition-duration: 0.9s;
+
+/* mega-menu */
+ul .mega-menu,
+ul .sub-menu {
+  /*z-index: 9999;
+  padding: 0;
+  position: absolute;
+  background: #FCFCFC;
+  border-top: 3px solid #519cf8;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transform: translateY(20%);*/
 }
 
-.mega-menu.speed-in {
-  left: 0;
-  display:block;
-  transition-duration: 0.9s;
+ .mega-menu > li a,
+ul .sub-menu > li a {
+  display: block;
+  color: #252525;
+  text-decoration: none;
+  font-size: 13px;
+  color: #858585;
 }
+
+ .mega-menu > li > .sub-menu,
+ul .sub-menu > li > .sub-menu {
+  background: #f8f8f8;
+}
+
+ .mega-menu {
+  left: 0;
+  width: 100%;
+  padding: 15px 30px;
+}
+
+ .mega-menu li {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+
+ .mega-menu li .badge {
+  position: absolute;
+  padding: 3px 5px;
+  background: #e74c3c;
+  font-size: 10px;
+  right: -10px;
+  z-index: 999;
+  color: #fff;
+}
+
+ .mega-menu li a {
+  padding: 5px 20px;
+  font-size: 13px;
+}
+
+ .mega-menu li ul {
+  padding: 0;
+}
+
+ .mega-menu li ul li {
+  display: block;
+}
+
+ .mega-menu li ul li a {
+  color: #858585;
+  transition: all 0.5s ease-in-out;
+}
+
+ .mega-menu li ul li:hover a {
+  background: #519cf8;
+  color: white;
+}
+ .mega-menu > li {
+  margin-right: 30px;
+}
+ .mega-menu > li > a {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+/* mega-menu */
+
+ul .sub-menu {
+  min-width: 200px;
+}
+ul .sub-menu li {
+  display: block;
+  position: relative;
+}
+ul .sub-menu li a {
+  padding: 10px 30px;
+  transition: all 0.5s ease-in-out;
+}
+ul .sub-menu li .sub-menu {
+  border-top: none;
+  left: 100%;
+  top: 0;
+}
+ul .sub-menu li:hover > .mega-menu,
+ul .sub-menu li:hover > .sub-menu {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+ul .sub-menu li:hover > a {
+  background: #519cf8;
+  color: white;
+}
+
+
+.mega-menu {
+    /*z-index: 2;*/
+    padding: 0;
+    position: absolute;
+    top: 70px;
+    background: #FCFCFC;
+    border-top: 3px solid #519cf8;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(20%);
+
+}
+.mega_show {
+visibility: visible;
+opacity: 1;
+transform: translateY(0);
+}
+
 
 @media only screen and (max-width: 900px) {
    .mega-menu {
@@ -592,49 +701,10 @@ main {
         -moz-transition: left 0.3s;
         transition: left 0.3s;
     }
-
-  .mm-3column{
-    width: 100%;
-    display:table;
-    clear:both;
-    margin-bottom: 2em;
-  }
-  .left-images{
-      display: none;
-  }
-
-  .categories-list ul span{
-    width: 230px;
-  }
-
-  .mega-menu ul a, .mega-menu span a{
-    display: block;
-    width: 230px;
-    height: 50px;
-    left: 20px;
-    line-height: 50px;
-    padding: 0 1em;
-    border-bottom: 1px solid #e0e6ef;
-  }
-  .mega-menu ul .current {
-    box-shadow: inset 3px 0 #435779;
-  }
-
 }
 
 /*--column--*/
-.mm-3column:after, .mm-3column:before{
-content:"";
-display:table;
-clear:both;
-}
-.mm-3column {
- float: left;
- position: relative;
- }
-.mm-3column {
-        width: 25%;
-}
+
 .responsive-img {
     display: block;
     max-width: 100%;
@@ -644,49 +714,7 @@ clear:both;
     font-size: 14px;
 
 }
- .left-images, .left-categories-list {
-   float: left;
-}
 
-.categories-list li {
-    display: block;
-    line-height: normal;
-    margin: 0;
-}
-.categories-list span a {
-    padding-left: 30px;
-    display: inline-block;
-}
-.link span i {
-	position: absolute;
-	margin-right: 12px;
-	font-size: 18px;
-	color: #595959;
-	-webkit-transition: all 0.4s ease;
-	-o-transition: all 0.4s ease;
-	transition: all 0.4s ease;
-}
-
-.categories-list li :hover{
-		background: none repeat scroll 0 0 #507fff;
-        color: #fff;
-}
-
-.left-images > p > a {
-    background: none repeat scroll 0 0 #444359;
-    display: block;
-    color: #fff;
-    font-size: 18px;
-    line-height: normal;
-    margin: 0;
-    padding: 5px 14px;
-}
-
-.categories-list span {
-    font-size: 18px;
-    padding-bottom: 5px;
-    text-transform: uppercase;
-}
 .display-on{
     display:block;
     transition-duration: 0.9s;

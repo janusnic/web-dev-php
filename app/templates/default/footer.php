@@ -77,11 +77,11 @@ $(document).ready(function () {
     });
 
     $('.drop-down').on('click', function () {
-        $('.mega-menu').toggleClass('speed-in');
+        $('.mega-menu').toggleClass('mega_show');
     });
 
     $('#close-menu').on('click', function () {
-        $('.mega-menu').removeClass('speed-in');
+        $('.mega-menu').removeClass('mega_show');
     });
 
     $('.form').find('input, textarea').on('keyup blur focus', function (e) {

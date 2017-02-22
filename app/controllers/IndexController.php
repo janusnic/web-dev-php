@@ -11,7 +11,7 @@ class IndexController extends Controller {
     }
 
     public function actionIndex () {
-        $data['title'] = 'Welcome To ';
+        $data['title'] = 'Home Page';
         $this->_view->rendertemplate('header',$data);
         $this->_view->render('index/index',$data);
         $this->_view->rendertemplate('footer',$data);

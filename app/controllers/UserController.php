@@ -4,38 +4,8 @@
  */
  class UserController extends Controller {
 
-    // define variables and set to empty values
-    protected $result = false;
-    protected $name = '';
-    protected $lname = '';
-    protected $email = '';
-    protected $password = '';
-    //Флаг ошибок
-    public $errors = false;
-
     public function __construct(){
         parent::__construct();
-    }
-
-    protected function checkEmail($email) {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-        return true;
-    }
-
-    protected function checkName($name) {
-        if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
-            return false;
-        }
-        return true;
-    }
-
-    protected function checkPassword($password) {
-        if (!(strlen($password)>=6) ){
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -44,23 +14,28 @@
      * @return bool
      */
     public function actionLogin () {
-        ob_start();
+
+        $result = false;
+        $email = '';
+        $password = '';
+
         if (isset($_POST) and (!empty($_POST))) {
 
-            $this->email = trim(strip_tags($_POST['email']));
-            $this->password = $_POST['password'];
+            $email = trim(strip_tags($_POST['email']));
+            $password = $_POST['password'];
+
+            //Флаг ошибок
+            $errors = false;
 
             //Валидация полей
-            if (!$this->checkEmail($this->email)) {
-                $this->errors[] = "Некорректный Email";
+            if (!User::checkEmail($email)) {
+                $errors[] = "Некорректный Email";
             }
 
             //Проверяем, существует ли пользователь
-            if ($this->password != '1234567') {
-                $this->errors[] = "Пользователя с таким email или паролем не существует";
-
+            if ($password != '1234567') {
+                $errors[] = "Пользователя с таким email или паролем не существует";
             }else{
-
                 User::auth(0); //записываем пользователя в сессию
                 header("Location: /profile"); //перенаправляем в личный кабинет
             }
@@ -73,40 +48,50 @@
 
     }
 
-        /**
-         * Регистрация пользователя
-         *
-         * @return bool
-         */
+    /**
+     * Регистрация пользователя
+     *
+     * @return bool
+     */
         public function actionSignup() {
-
-        $this->name = '';
+            // define variables and set to empty values
+            $result = false;
+            $name = '';
+            $lname = '';
+            $email = '';
+            $password = '';
 
         if (isset($_POST) and (!empty($_POST))) {
-            $this->name = trim(strip_tags($_POST['name']));
-            $this->lname = trim(strip_tags($_POST['lname']));
-            $this->email = trim(strip_tags($_POST['email']));
-            $this->password = trim(strip_tags($_POST['password']));
+            $name = trim(strip_tags($_POST['name']));
+            $lname = trim(strip_tags($_POST['lname']));
+            $email = trim(strip_tags($_POST['email']));
+            $password = trim(strip_tags($_POST['password']));
 
-        //Валидация полей
-        if (!$this->checkName($this->name)) {
-            $this->errors[] = "Only letters and white space allowed. Your entry is: $this->name";
+            //Флаг ошибок
+            $errors = false;
+
+            //Валидация полей
+            if (!User::checkName($name)) {
+                $errors[] = "Имя не может быть короче 2-х символов";
+            }
+
+            if (!User::checkEmail($email)) {
+                $errors[] = "Некорректный Email";
+            }
+
+            if (!User::checkPassword($password)) {
+                $errors[] = "Пароль не может быть короче 6-ти символов";
+            }
+
+            if ($errors == false) {
+                $result = true;
+
+            }
+
         }
-
-        if (!$this->checkEmail($this->email)) {
-            $this->errors[] = "Invalid email format. Your entry is: $this->email";
-        }
-
-        if (!$this->checkPassword($this->password)) {
-            $this->errors[] = "Password must be six or more symbols. Your entry is: $this->password";
-        }
-
-         if ($this->errors == false) {
-             $this->result = true;
-         }
-        }
-
+        $data['success'] = $result;
         $data['title'] = 'Signup Page ';
+
         $this->_view->rendertemplate('header',$data);
         $this->_view->render('user/signup',$data);
         $this->_view->rendertemplate('footer',$data);
