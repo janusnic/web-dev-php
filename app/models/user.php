@@ -96,9 +96,10 @@ class User {
      *
      * @param $userId
      */
-    public static function auth ($userId) {
-
-        $_SESSION['user'] = $userId;
+    public static function auth ($userId, $name) {
+            Session::set('userId',$userId);
+            Session::set('username',$name);
+            Session::set('logged',true);
     }
 
     /**
@@ -108,8 +109,7 @@ class User {
      * @return bool
      */
     public static function isGuest () {
-
-        if (isset($_SESSION['user'])) {
+        if (Session::get('logged') == true) {
             return false;
         }
         return true;

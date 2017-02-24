@@ -75,7 +75,7 @@ class Router {
      * @return boolean
      */
      protected function _error($error) {
-         //require ROOT . '/app/core/errors.php';
+         require ROOT . '/app/core/errors.php';
          $this->_controller = new Errors($error);
          $this->_controller->index();
          die;

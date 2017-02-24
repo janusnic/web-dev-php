@@ -19,6 +19,10 @@
                 $email = '';
                 $password = '';
 
+                if(Session::get('logged') == true){
+                    Url::redirect('profile');
+                }
+
                 if (isset($_POST) and (!empty($_POST))) {
 
                     $email = trim(strip_tags($_POST['email']));
@@ -36,8 +40,9 @@
                     if ($password != '1234567') {
                         $data['errors'][] = "Пользователя с таким email или паролем не существует";
                     }else{
-                        User::auth(0); //записываем пользователя в сессию
-                        header("Location: /profile"); //перенаправляем в личный кабинет
+                        User::auth(0, $email); //записываем пользователя в сессию
+                        //header("Location: /profile"); //перенаправляем в личный кабинет
+                        Url::redirect('profile');
                     }
                 }
 
@@ -100,9 +105,7 @@
      * @return bool
      */
     public function actionLogout () {
-        unset($_SESSION['user']);
-        header('Location: /');
-        return true;
+        Session::destroy();
+        header("Location: /");
     }
-
 }
