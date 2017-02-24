@@ -30,75 +30,13 @@
 	        </div>
 
 	        <!-- Mega Menu -->
-	        <?php
-
-	        $categories = [
-	            ['id'=>1, 'name'=>'Computer', 'parent_id'=>0, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>2, 'name'=>'Laptops', 'parent_id'=>1, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>3, 'name'=>'Tablets', 'parent_id'=>1, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>4, 'name'=>'Monitors', 'parent_id'=>1, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>5, 'name'=>'Printers', 'parent_id'=>1, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>6, 'name'=>'Scanners', 'parent_id'=>1, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>7, 'name'=>'Phones', 'parent_id'=>0, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>8, 'name'=>'iPhone', 'parent_id'=>7, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>9, 'name'=>'Speakers', 'parent_id'=>7, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>10, 'name'=>'Subwoofers', 'parent_id'=>7, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>11, 'name'=>'Amplifiers', 'parent_id'=>7, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>12, 'name'=>'Players', 'parent_id'=>7, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>13, 'name'=>'iPods', 'parent_id'=>7, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>14, 'name'=>'TVs', 'parent_id'=>7, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>15, 'name'=>'Clothes', 'parent_id'=>0, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>16, 'name'=>'Jumpers', 'parent_id'=>15, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>17, 'name'=>'Cardigans', 'parent_id'=>15, 'sort_order'=>0, 'status'=>11, 'link' =>'#' ],
-	            ['id'=>18, 'name'=>'Clothes', 'parent_id'=>15, 'sort_order'=>0, 'status'=>1, 'link' =>'#' ],
-	        ];
-	        $menus = array(
-	        	'items' => array(),
-	        	'parents' => array()
-	        );
-
-	        foreach($categories as $items) {
-	        	// Create current menus item id into array
-	        	$menus['items'][$items['id']] = $items;
-	        	// Creates list of all items with children
-	        	$menus['parents'][$items['parent_id']][] = $items['id'];
-	        }
-	        // var_dump($menus);
-	        // Print all tree view menus
-	        echo "<div class='mega-menu fadeIn animated' id='mega_menu'><div class='mm-3column'><span class='left-images'><img  src=<?php echo url::get_template_path();?>assets/images/4.jpg><p><a href='#'>Most Popular Styles </a></p></span></div><div id='close-menu'><a class='img-replace' href='#'>Menu</a></div>";
-	        echo createTreeView(0, $menus);
-	        echo '</div>';
-
-	        // function to create dynamic treeview menus
-
-	        function createTreeView($parent, $menu) {
-	           $html = "";
-
-	           if (isset($menu['parents'][$parent])) {
-	               $html .= "
-	               <ul class='default submenu'>";
-
-	               foreach ($menu['parents'][$parent] as $itemId) {
-	                  if(!isset($menu['parents'][$itemId])) {
-	                      $html .= "<li><a href='".$menu['items'][$itemId]['link']."'>".$menu['items'][$itemId]['name']."</a></li>";
-	                  }
-	              $html .= "</ul>";
-
-	                  if(isset($menu['parents'][$itemId])) {
-	                      $html .= "
-	                      <div class='mm-3column'><span class='categories-list'>";
-	                     $html .= "<span class='link'><i class='fa fa-mobile'></i>&nbsp;<a  href='".$menu['items'][$itemId]['link']."'>".$menu['items'][$itemId]['name']."</a></span>";
-
-	                     $html .= createTreeView($itemId, $menu);
-	                     $html .= "</span></div>";
-	                  }
-	               }
-	           }
-
-	           return $html;
-	        }
-	         ?>
+	        <div class='fadeIn animated' id='mega_menu'>
+				<ul class="mega-menu">
+					<?= url::treeView();?>
+				</ul>
+			</div>
 	        <!-- Mega Menu -->
+
 	    </header>
 	    <nav id="main-nav">
 	        <ul>

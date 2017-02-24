@@ -1,6 +1,6 @@
-    <?php if (isset($this->errors) && is_array($this->errors)):?>
+    <?php if (isset($data['errors']) && is_array($data['errors'])):?>
         <ul class="errors">
-            <?php foreach($this->errors as $error):?>
+            <?php foreach($data['errors'] as $error):?>
                 <li> - <?php echo $error;?></li>
             <?php endforeach;?>
         </ul>
@@ -31,7 +31,6 @@
                       <input type="submit" class="button button-block" value="Log In" />
 
                       </form>
-
                   </div><!-- content -->
 
             </div> <!-- /form -->

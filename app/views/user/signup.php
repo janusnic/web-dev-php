@@ -1,6 +1,10 @@
-        <?php if (isset($this->errors) && is_array($this->errors)):?>
+<?php if($data['success']):?>
+    <h4 id="reg_thanks">Спасибо за регистрацию!</h4>
+    <h3 id="reg_main">Вернуться на <a href="/" id="reg_main_a">Главную</a></h3>
+<?php else: ?>
+        <?php if (isset($data['errors'])):?>
             <ul class="errors">
-                <?php foreach($this->errors as $error):?>
+                <?php foreach($data['errors'] as $error):?>
                     <li> - <?php echo $error;?></li>
                 <?php endforeach;?>
             </ul>
@@ -43,5 +47,6 @@
 
                       <input type="submit" class="button button-block" value="Get Started" />
                       </form>
+                    <?php endif;?>
                     </div>
             </div> <!-- /form -->
