@@ -24,7 +24,7 @@ class Product {
         $db = db::getConnection();
 
         $sql = "
-                SELECT id, name, price, is_new
+                SELECT id, name, price, is_new, description
                   FROM product
                     WHERE status = 1
                       ORDER BY id DESC
@@ -56,10 +56,10 @@ class Product {
         $noImage = 'no-image.jpg';
 
         // Путь к папке с товарами
-        $path = "/app/media/upload/images/products/$id/";
+        $path = "/app/media/upload/images/products/";
 
         // Путь к изображению товара
-        $pathToProductImage = $path . $id . '.jpg';
+        $pathToProductImage = $path . $id . '/' . $id . '.jpg';
 
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $pathToProductImage)) {
             // Если изображение для товара существует
@@ -71,5 +71,171 @@ class Product {
         return $path . $noImage;
     }
 
+    /**
+     * Выбираем товар по идентификатору
+     *
+     * @param $productId
+     * @return mixed
+     */
+    public static function getProductById ($productId) {
+
+        $db = Db::getConnection();
+
+        $sql = "
+               SELECT id, name, code, price, availability, brand,
+                description, is_new, category_id, status FROM product
+                    WHERE id = :id
+               ";
+
+        $res = $db->prepare($sql);
+        $res->bindParam(':id', $productId, PDO::PARAM_INT);
+        $res->execute();
+
+        $products = $res->fetch(PDO::FETCH_ASSOC);
+
+        return $products;
+    }
+    /**
+     * Выборка товаров по массиву id
+     *
+     * @param $arrayIds
+     * @return array
+     */
+    public static function getProductsByIds ($arrayIds) {
+
+        $db = Db::getConnection();
+
+        //Разбиваем пришедший массив в строку
+        $stringIds = implode(',', $arrayIds);
+
+        $sql = "
+                SELECT id, name, code, price FROM product
+                WHERE status = 1 AND id IN ($stringIds)
+                ";
+
+        $res = $db->query($sql);
+
+        $products = $res->fetchAll(PDO::FETCH_ASSOC);
+
+        return $products;
+    }
+
+    /**
+     * Выводит списко всех товраов
+     *
+     * @return array
+     */
+    public static function getProductsList () {
+
+        $db = Db::getConnection();
+
+        $sql = "
+                SELECT id, name, code, price FROM product
+                ORDER BY id ASC
+                ";
+
+        $res = $db->query($sql);
+
+        $products = $res->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+
+        return $products;
+    }
+
+    /**
+     * Добавление продукта
+     *
+     * @param $options - характеристики товара
+     * @return int|string
+     */
+    public static function addProduct ($options) {
+
+        $db = Db::getConnection();
+
+        $sql = "
+                INSERT INTO product(name, category_id, code, price, availability,
+                                    brand, description, is_new, status)
+                VALUES (:name, :category_id, :code, :price, :availability,
+                        :brand, :description, :is_new, :status)
+                ";
+
+        $res = $db->prepare($sql);
+
+        $res->bindParam(':name', $options['name'], PDO::PARAM_STR);
+        $res->bindParam(':category_id', $options['category'], PDO::PARAM_INT);
+        $res->bindParam(':code', $options['code'], PDO::PARAM_INT);
+        $res->bindParam(':price', $options['price'], PDO::PARAM_INT);
+        $res->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
+        $res->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
+        $res->bindParam(':description', $options['description'], PDO::PARAM_STR);
+        $res->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $res->bindParam(':status', $options['status'], PDO::PARAM_INT);
+
+        //Если запрос выполнен успешно
+        if ($res->execute()) {
+            //Возвращаем id последней записи, позже, в контроллере переходим на страницу этого товара, если все успешно
+            return $db->lastInsertId();
+        } else {
+            return 0;
+        }
+    }
+    /**
+     * Изменение товара
+     *
+     * @param $id
+     * @param $options
+     * @return bool
+     */
+    public static function editProduct ($id, $options) {
+
+        $db = Db::getConnection();
+
+        $sql = "
+                UPDATE product
+                SET
+                    name = :name,
+                    category_id = :category,
+                    code = :code,
+                    price = :price,
+                    availability = :availability,
+                    brand = :brand,
+                    description = :description,
+                    is_new = :is_new,
+                    status = :status
+                WHERE id = :id
+                ";
+
+        $res = $db->prepare($sql);
+
+        $res->bindParam(':name', $options['name'], PDO::PARAM_STR);
+        $res->bindParam(':category', $options['category'], PDO::PARAM_INT);
+        $res->bindParam(':code', $options['code'], PDO::PARAM_INT);
+        $res->bindParam(':price', $options['price'], PDO::PARAM_INT);
+        $res->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
+        $res->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
+        $res->bindParam(':description', $options['description'], PDO::PARAM_STR);
+        $res->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $res->bindParam(':status', $options['status'], PDO::PARAM_INT);
+        $res->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $res->execute();
+    }
+    /**
+     * Удаление товара(админка)
+     *
+     * @param $id
+     * @return bool
+     */
+    public static function deleteProductById ($id) {
+        $db = Db::getConnection();
+
+        $sql = "
+                DELETE FROM product WHERE id = :id
+                ";
+
+        $res = $db->prepare($sql);
+        $res->bindParam(':id', $id, PDO::PARAM_INT);
+        return $res->execute();
+    }
 
 }
