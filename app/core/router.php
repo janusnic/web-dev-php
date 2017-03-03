@@ -61,7 +61,8 @@ class Router {
          if ($length > 1) {
              $action = 'action' . ucfirst($this->_url[1]);
              if (method_exists($this->_controller, $action)) {
-                 $this->_controller->$action($this->_url[2]);
+                 //$param = ($this->_url[2] )? $this->_url[2] : "/";
+                 $this->_controller->$action(@$this->_url[2] );
                  $this->result = true;
              } else {
                  $this->_error("Method does not exist: ".$this->_url[1]);

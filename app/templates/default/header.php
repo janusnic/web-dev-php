@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?php echo url::get_template_path();?>assets/font-awesome/css/font-awesome.min.css">
 
     <link href="<?php echo url::get_template_path();?>assets/css/main.css" rel="stylesheet">
+	<link href="<?php echo url::get_template_path();?>assets/css/pager.css" rel="stylesheet">
 </head>
 <body>
 	    <header>

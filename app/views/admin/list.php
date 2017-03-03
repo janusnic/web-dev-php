@@ -1,6 +1,7 @@
-<section>
+<article class='large'>
+
 <div class="container_admin">
-    <a href="/admin/product/add" class="add_item"><i class="fa fa-plus fa-2x" aria-hidden="true"></i> Добавить товар 
+    <a href="/admin/product/add" class="add_item"><i class="fa fa-plus fa-2x" aria-hidden="true"></i> Добавить товар
     </a>
     <h4 id="admin_list_h4">Список товаров</h4>
     <table id="admin_product_list" cellspacing="0">
@@ -27,5 +28,6 @@
         <?php endforeach;?>
     </table>
 </div>
-</section>
+
 <div class="appendix"></div>
+</article>

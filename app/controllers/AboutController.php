@@ -17,5 +17,5 @@
              $this->_view->rendertemplate('footer',$data);
 
          }
-     
+
  }

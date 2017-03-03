@@ -12,9 +12,9 @@ class AdminProductController extends Controller {
     public function actionIndex () {
         $data['products'] = Product::getProductsList();
         $data['title'] = 'Admin Product List Page ';
-        $this->_view->rendertemplate('header',$data);
+        $this->_view->rendertemplate('admin/header',$data);
         $this->_view->render('admin/list',$data);
-        $this->_view->rendertemplate('footer',$data);
+        $this->_view->rendertemplate('admin/footer',$data);
     }
 
     /**
@@ -35,9 +35,9 @@ class AdminProductController extends Controller {
 
         $data['product_id'] = $id;
         $data['title'] = 'Admin Product Delete Page ';
-        $this->_view->rendertemplate('header',$data);
+        $this->_view->rendertemplate('admin/header',$data);
         $this->_view->render('admin/delete',$data);
-        $this->_view->rendertemplate('footer',$data);
+        $this->_view->rendertemplate('admin/footer',$data);
     }
 
     /**
@@ -46,6 +46,9 @@ class AdminProductController extends Controller {
      * @return bool
      */
     public function actionAdd () {
+
+        //Список категорий для выпадающего списка
+        $categories = Category::getCategoryListAdmin();
 
         //Принимаем данные из формы
         if (isset($_POST) and !empty($_POST)) {
@@ -77,9 +80,10 @@ class AdminProductController extends Controller {
             header('Location: /admin/product');
         }
         $data['title'] = 'Admin Product Add Page ';
-        $this->_view->rendertemplate('header',$data);
+        $data['categories'] = $categories;
+        $this->_view->rendertemplate('admin/header',$data);
         $this->_view->render('admin/add',$data);
-        $this->_view->rendertemplate('footer',$data);
+        $this->_view->rendertemplate('admin/footer',$data);
     }
 
     /**
@@ -91,6 +95,9 @@ class AdminProductController extends Controller {
     public function actionEdit ($id) {
         //Получаем информацию о выбранном товаре
         $product = Product::getProductById($id);
+        //Список категорий для выпадающего списка
+        $categories = Category::getCategoryListAdmin();
+
         //Принимаем данные из формы
         if (isset($_POST) and !empty($_POST)) {
             $options['name'] = trim(strip_tags($_POST['name']));
@@ -116,9 +123,11 @@ class AdminProductController extends Controller {
             header('Location: /admin/product');
         }
         $data['product'] = Product::getProductById($id);
+        $data['categories'] = $categories;
+
         $data['title'] = 'Admin Product Edit Page ';
-        $this->_view->rendertemplate('header',$data);
+        $this->_view->rendertemplate('admin/header',$data);
         $this->_view->render('admin/edit',$data);
-        $this->_view->rendertemplate('footer',$data);
+        $this->_view->rendertemplate('admin/footer',$data);
     }
 }

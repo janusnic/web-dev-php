@@ -12,9 +12,9 @@ class AdminController extends Controller {
 
     public function actionIndex () {
         $data['title'] = 'Admin Page ';
-        $this->_view->rendertemplate('header',$data);
+        $this->_view->rendertemplate('admin/header',$data);
         $this->_view->render('admin/index',$data);
-        $this->_view->rendertemplate('footer',$data);
+        $this->_view->rendertemplate('admin/footer',$data);
 
     }
 

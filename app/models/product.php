@@ -238,4 +238,26 @@ class Product {
         return $res->execute();
     }
 
+    /**
+     * Общее кол-во товаров в магазине
+     *
+     * @return mixed
+     */
+    public static function getTotalProducts () {
+
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Текст запроса к БД
+        $sql = "SELECT count(id) AS count FROM product WHERE status=1 ";
+
+        // Выполнение коменды
+        $res = $db->query($sql);
+
+        // Возвращаем значение count - количество
+        $row = $res->fetch();
+        return $row['count'];
+    }
+
+
 }

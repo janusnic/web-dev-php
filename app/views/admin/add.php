@@ -1,6 +1,6 @@
-<section>
-    <div class="container">
-        <h2>Добавить новый товар</h2>
+<article class='large'>
+
+        <h1>Добавить новый товар</h1>
             <form action="#" method="post" id="add_form" enctype="multipart/form-data">
 
                 <p>Название товара</p>
@@ -13,7 +13,15 @@
                 <input required type="text" name="price">
 
                 <p>Категория</p>
-                <input required type="text" name="category">
+                <select name="category">
+                    <?php if (is_array($data['categories'])): ?>
+                        <?php foreach ($data['categories'] as $category): ?>
+                            <option value="<?php echo $category['id']; ?>">
+                                <?php echo $category['name']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
 
                 <p>Производитель</p>
                 <input required type="text" name="brand">
@@ -43,6 +51,6 @@
                 </select>
                 <input type=submit name="submit" value="Сохранить" id="add_btn">
             </form>
-    </div>
-</section>
+
 <div class="appendix"></div>
+</article>

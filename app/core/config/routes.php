@@ -15,10 +15,19 @@ return array(
     // about
     'about' => 'about/index',
 
+    //Каталог
+    'catalog/page-([0-9]+)' => 'catalog/index/$1',
+    'catalog' => 'catalog/index',
+
     'admin/product/edit/([0-9]+)' => 'adminProduct/edit/$1',
     'admin/product/add' => 'adminProduct/add',
     'admin/product/delete/([0-9]+)' => 'adminProduct/delete/$1',
     'admin/product' => 'adminProduct/index',
+
+    'admin/category/edit/([0-9]+)' => 'adminCategory/edit/$1',
+    'admin/category/add' => 'adminCategory/add',
+    'admin/category/delete/([0-9]+)' => 'adminCategory/delete/$1',
+    'admin/category' => 'adminCategory/index',
 
     'admin' => 'admin/index',
 

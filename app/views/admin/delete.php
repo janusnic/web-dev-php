@@ -1,5 +1,5 @@
-<div class="container_admin_del">
-    <h4>Удалить товар #<?php echo $data['product_id']; ?></h4>
+<article class='large'>
+    <h1>Удалить товар #<?php echo $data['product_id']; ?></h1>
 
 
     <p>Вы действительно хотите удалить этот товар?</p>
@@ -7,5 +7,6 @@
     <form method="post">
         <input type="submit" name="submit" value="Удалить" />
     </form>
-</div>
+
 <div class="appendix"></div>
+</article>
