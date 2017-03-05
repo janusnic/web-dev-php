@@ -1,79 +1,38 @@
 <?php
+
 /**
  * Class UserController для работы с пользователем
  */
+
  class UserController extends Controller {
 
-    public function __construct(){
-        parent::__construct();
-    }
+     /**
+     * Class UserController для работы с пользователем
+     */
+     public function __construct(){
+         parent::__construct();
+     }
 
     /**
-     * Авторизация пользователя
+     * Регистрация пользователя
      *
      * @return bool
      */
-    public function actionLogin () {
+    public function actionSignup() {
 
-                $result = false;
-                $email = '';
-                $password = '';
-
-                if(Session::get('logged') == true){
-                    Url::redirect('profile');
-                }
-
-                if (isset($_POST) and (!empty($_POST))) {
-
-                    $email = trim(strip_tags($_POST['email']));
-                    $password = $_POST['password'];
-
-                    //Флаг ошибок
-                    $data['errors'] = false;
-
-                    //Валидация полей
-                    if (!User::checkEmail($email)) {
-                        $data['errors'][] = "Некорректный Email";
-                    }
-
-                    //Проверяем, существует ли пользователь
-                    if ($password != '1234567') {
-                        $data['errors'][] = "Пользователя с таким email или паролем не существует";
-                    }else{
-                        User::auth(0, $email); //записываем пользователя в сессию
-                        //header("Location: /profile"); //перенаправляем в личный кабинет
-                        Url::redirect('profile');
-                    }
-                }
-
-        $data['title'] = 'Login Page ';
-        $this->_view->rendertemplate('header',$data);
-        $this->_view->render('user/login',$data);
-        $this->_view->rendertemplate('footer',$data);
-    }
-
-        /**
-         * Регистрация пользователя
-         *
-         * @return bool
-         */
-        public function actionSignup() {
-
-            // define variables and set to empty values
-            $result = false;
-            $name = '';
-            $lname = '';
-            $email = '';
-            $password = '';
+        $result = false;
+        $name = '';
+        $email = '';
+        $password = '';
 
         if (isset($_POST) and (!empty($_POST))) {
             $name = trim(strip_tags($_POST['name']));
-            $lname = trim(strip_tags($_POST['lname']));
             $email = trim(strip_tags($_POST['email']));
             $password = trim(strip_tags($_POST['password']));
 
             //Флаг ошибок
             $data['errors'] = false;
+
             //Валидация полей
             if (!User::checkName($name)) {
                 $data['errors'][] = "Имя не может быть короче 2-х символов";
@@ -87,8 +46,12 @@
                 $data['errors'][] = "Пароль не может быть короче 6-ти символов";
             }
 
+            if (User::checkEmailExists($email)) {
+                $data['errors'][] = "Такой email уже используется";
+            }
+
             if ($data['errors'] == false) {
-                $result = true;
+                $result = User::register($name, $email, password_hash($password, PASSWORD_DEFAULT));
             }
         }
 
@@ -99,6 +62,52 @@
         $this->_view->rendertemplate('footer',$data);
 
     }
+
+    /**
+     * Авторизация пользователя
+     *
+     * @return bool
+     */
+    public function actionLogin () {
+
+        $email = '';
+        $password = '';
+
+        if(Session::get('logged') == true){
+                    Url::redirect('profile');
+                }
+
+        if (isset($_POST) and (!empty($_POST))) {
+
+            $email = trim(strip_tags($_POST['email']));
+            $password = $_POST['password'];
+
+            //Флаг ошибок
+            $data['errors'] = false;
+
+            //Валидация полей
+            if (!User::checkEmail($email)) {
+                $data['errors'][] = "Некорректный Email";
+            }
+
+            //Проверяем, существует ли пользователь
+            $userId = User::checkUserData($email, $password);
+
+            if ($userId == false) {
+                $data['errors'][] = "Пользователя с таким email или паролем не существует";
+            }else{
+                User::auth($userId); //записываем пользователя в сессию
+
+                header("Location: /profile/"); //перенаправляем в личный кабинет
+            }
+        }
+        $data['title'] = 'Login Page ';
+        $this->_view->rendertemplate('header',$data);
+        $this->_view->render('user/login',$data);
+        $this->_view->rendertemplate('footer',$data);
+
+    }
+
     /**
      * Выход из учетной записи
      *
@@ -106,6 +115,7 @@
      */
     public function actionLogout () {
         Session::destroy();
-        header("Location: /");
+        header('Location: /');
+        return true;
     }
 }
