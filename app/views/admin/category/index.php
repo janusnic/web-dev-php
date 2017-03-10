@@ -1,8 +1,8 @@
 <article class='large'>
         <a href="/admin/category/add" class="add_item"><i class="fa fa-plus fa-2x" aria-hidden="true"></i> Добавить категорию
         </a>
-        <h4 id="admin_list_h4">Список категорий</h4>
-        <table id="admin_product_list" cellspacing="0">
+        <h4>Список категорий</h4>
+        <table>
             <tr>
                 <th>ID категории</th>
                 <th>Название категории</th>

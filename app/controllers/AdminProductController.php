@@ -3,13 +3,15 @@
 /**
  *Контроллер для просмотра и управления списком всех товаров, имеющихся в базе
  */
-class AdminProductController extends Controller {
+class AdminProductController extends Admin {
 
     /**
      * Просмотр всех товаров
      * @return bool
      */
     public function actionIndex () {
+        //проверка доступа
+        $this->checkAdmin();
         $data['products'] = Product::getProductsList();
         $data['title'] = 'Admin Product List Page ';
         $this->_view->rendertemplate('admin/header',$data);
@@ -24,7 +26,8 @@ class AdminProductController extends Controller {
      * @return bool
      */
     public function actionDelete ($id) {
-
+        //проверка доступа
+        $this->checkAdmin();
         //Проверяем форму
         if (isset($_POST['submit'])) {
             //Если отправлена, то удаляем нужный товар
@@ -46,7 +49,8 @@ class AdminProductController extends Controller {
      * @return bool
      */
     public function actionAdd () {
-
+        //проверка доступа
+        $this->checkAdmin();
         //Список категорий для выпадающего списка
         $categories = Category::getCategoryListAdmin();
 
@@ -93,6 +97,8 @@ class AdminProductController extends Controller {
      * @return bool
      */
     public function actionEdit ($id) {
+        //проверка доступа
+        $this->checkAdmin();
         //Получаем информацию о выбранном товаре
         $product = Product::getProductById($id);
         //Список категорий для выпадающего списка

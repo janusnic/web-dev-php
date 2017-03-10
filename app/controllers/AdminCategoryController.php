@@ -3,7 +3,7 @@
 /**
  * Контроллер для управления категориями
  */
-class AdminCategoryController extends Controller{
+class AdminCategoryController extends Admin{
 
     /**
      * Главная страница управления категориями
@@ -11,7 +11,8 @@ class AdminCategoryController extends Controller{
      * @return bool
      */
     public function actionIndex (){
-
+        //проверка доступа
+        $this->checkAdmin();
             $data['categories'] = Category::getCategoryListAdmin();
             $data['title'] = 'Admin Category List Page ';
             $this->_view->rendertemplate('admin/header',$data);
@@ -26,7 +27,8 @@ class AdminCategoryController extends Controller{
      * @return bool
      */
     public function actionDelete ($id) {
-
+        //проверка доступа
+        $this->checkAdmin();
         //Проверяем форму
         if (isset($_POST['submit'])) {
             //Если отправлена, то удаляем нужный товар
@@ -48,7 +50,8 @@ class AdminCategoryController extends Controller{
      * @return bool
      */
     public function actionAdd () {
-
+        //проверка доступа
+        $this->checkAdmin();
         //Принимаем данные из формы
         if (isset($_POST) and !empty($_POST)) {
             $options['parent_id'] = trim(strip_tags($_POST['parent_id']));
@@ -72,7 +75,8 @@ class AdminCategoryController extends Controller{
      * @return bool
      */
     public function actionEdit ($id) {
-
+        //проверка доступа
+        $this->checkAdmin();
         // Получаем список категорий для выпадающего списка
         $category = Category::getCategoryById($id);
 

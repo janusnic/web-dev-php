@@ -9,7 +9,11 @@ return array(
 
     //Выход
     'user/logout' => 'user/logout',
+
     // profile
+    //Личный кабинет
+    'profile/orders' => 'profile/ordersList',
+    'profile/edit' => 'profile/edit',
     'profile' => 'profile/index',
 
     // about
@@ -28,6 +32,13 @@ return array(
     'admin/category/add' => 'adminCategory/add',
     'admin/category/delete/([0-9]+)' => 'adminCategory/delete/$1',
     'admin/category' => 'adminCategory/index',
+
+    //Админпанель
+    'admin/orders/edit/([0-9]+)' => 'adminOrder/edit/$1',
+    'admin/orders/view/([0-9]+)' => 'adminOrder/view/$1',
+    'admin/orders/delete/([0-9]+)' => 'adminOrder/delete/$1',
+    'admin/orders' => 'adminOrder/index',
+
 
     'admin' => 'admin/index',
 
