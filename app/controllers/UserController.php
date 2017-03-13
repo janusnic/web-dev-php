@@ -63,6 +63,23 @@
 
     }
 
+    public function actionCheck () {
+        if(!Session::get('logged') == true){
+
+            $response = array(
+                    'r' => 'fail',
+                    'url' => 'user/login'
+                );
+            } else {
+                $response = array(
+                    'r' => 'success',
+                    'msg' => 'Logged in'
+                );
+            }
+
+            echo json_encode($response);
+            exit;
+        }
     /**
      * Авторизация пользователя
      *

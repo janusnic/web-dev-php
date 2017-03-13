@@ -7,8 +7,14 @@ return array(
     //Вход
     'user/login' => 'user/login',
 
+    'check' => 'user/check',
+
     //Выход
     'user/logout' => 'user/logout',
+
+    //оформление заказа
+    'cart' => 'cart/index',
+    'cart/checkout' => 'cart/checkout',
 
     // profile
     //Личный кабинет

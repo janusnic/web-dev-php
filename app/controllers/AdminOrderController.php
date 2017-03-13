@@ -37,17 +37,29 @@ class AdminOrderController extends Admin {
         $orders = Order::getOrderById($id);
 
         //Преобразуем JSON  строку продуктов и их кол-ва в массив
-        $productQuantity = json_decode($orders['products'], true);
+
+        $productQuantity = json_decode(json_decode($orders['products'], true));
 
         //Выбираем ключи заказанных товаров
-        $productIds = array_keys($productQuantity);
+        $productIds = array();
+
+        $pQuantity =  array();
+
+        for ($i=0; $i<count($productQuantity); $i++)
+        {
+                array_push($productIds, $productQuantity[$i] ->{'id'});
+
+                array_push($pQuantity, array($productQuantity[$i] ->{'id'} => $productQuantity[$i] ->{'quantity'}));
+        }
+
 
         //Получаем список товаров по выбранным id
+
         $products = Product::getProductsByIds($productIds);
 
         $data['orders'] = $orders;
+        $data['pQuantity'] = $pQuantity;
         $data['products'] = $products;
-        $data['productQuantity'] = $productQuantity;
         $data['title'] = 'Admin Order View Page ';
         $this->_view->rendertemplate('admin/header',$data);
         $this->_view->render('admin/order/view',$data);
