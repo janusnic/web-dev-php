@@ -54,13 +54,13 @@
                 <th>Количество</th>
             </tr>
 
-            <?php foreach ($data['products'] as $product):?>
+            <?php $i=0; foreach ($data['products'] as $product):?>
                 <tr>
                     <td><?php echo $product['id']?></td>
                     <td><?php echo $product['code'];?></td>
                     <td><?php echo $product['name'];?></td>
                     <td><?php echo $product['price'];?></td>
-                    <td><?php echo $data['pQuantity'][0][$product['id']];?></td>
+                    <td><?php echo $data['pQuantity'][$i][$product['id']]; $i++;?></td>
                     <td><?php print_r($data['pQuantity']);?></td>
                 </tr>
             <?php endforeach;?>

@@ -142,12 +142,19 @@ $(document).ready(function () {
     });
 
     $('body').on('click', '.product .add', function () {
-        var items = $cart.children(), $item = $(this).parents('.product'), $template = $($('#cartItem').html()), $matched = null, quantity = 0;
+        var items = $cart.children(),
+        $item = $(this).parents('.product'),
+
+        $template = $($('#cartItem').html()),
+
+        $matched = null,
+        quantity = 0;
 
         $matched = items.filter(function (index) {
             var $this = $(this);
             return $this.data('id') === $item.attr('data');
         });
+
         if ($matched.length) {
             quantity = +$matched.find('.qty').val() + 1;
             $matched.find('.qty').val(quantity);
@@ -158,7 +165,9 @@ $(document).ready(function () {
 
             $template.find('span.name').text($item.find('h3').text().substring(0,20));
             $template.find('.price').text("$"+$item.find('.price b').text());
+            $template.find('.cart-product').attr('id', $item.attr('data'));
             $template.find('.subtotal').text('$' + p);
+
             $template.data('id', $item.attr('data'));
             $template.data('price', p);
             $template.data('subtotal', p);
@@ -179,7 +188,7 @@ $(document).ready(function () {
 
     function calculateAndUpdate() {
         var subtotal = 0,
-        items = $cart.children(),
+        items = $('.cart-items').children(),
         shipping = items.length > 0 ? 5 : 0,
         tax = 0;
         items.each(function (index, item) {
@@ -246,22 +255,26 @@ $(document).ready(function () {
 
     $('.dialog__pay').on('click',function(){
 
-        var items = $cart.children();
+        var items = $('.cart-items').children();
         var data = [];
-        var its = new Object();
+
 
         items.each(function (index, item) {
             var $item = $(item);
+            var its = new Object();
             its.id = $item.data('id'),
+            console.log(its.id);
             its.quantity = $item.find('.qty').val();
+            console.log(its.quantity);
             data.push(its);
-            console.log(its.id, its.quantity,data);
+            console.log(data);
         });
 
-        console.log(data); //
+        //console.log(data); //
         var values = JSON.stringify(data);
 
         console.log(values); //
+
         $.ajax({
              type: 'POST',
              url: 'cart/index',
@@ -272,6 +285,7 @@ $(document).ready(function () {
                 $(location).attr('href', 'cart/index')
              }
         });
+
     });
 });
 
