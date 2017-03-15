@@ -45,6 +45,15 @@ return array(
     'admin/orders/delete/([0-9]+)' => 'adminOrder/delete/$1',
     'admin/orders' => 'adminOrder/index',
 
+    'admin/blog/edit/([0-9]+)' => 'adminBlog/edit/$1',
+    'admin/blog/add' => 'adminBlog/add',
+    'admin/blog/delete/([0-9]+)' => 'adminBlog/delete/$1',
+    'admin/blog' => 'adminBlog/index',
+
+    //'blog/([a-zA-Z0-9_-]+)' => 'blog/view/$1',
+    'blog/([0-9]+)' => 'blog/view/$1',
+
+    'blog' => 'blog/index',
 
     'admin' => 'admin/index',
 
