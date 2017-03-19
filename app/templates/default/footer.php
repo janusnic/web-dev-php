@@ -61,6 +61,23 @@
 <script src="<?php echo url::get_template_path();?>assets/js/shop.js"></script>
 
 <script type="text/javascript">
+
+$.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
 $(document).ready(function () {
 
     var $cart = $('.cart-items');
@@ -140,6 +157,94 @@ $(document).ready(function () {
             }
         }
     });
+
+
+    var working = false;
+
+    $('#addCommentForm').on('submit', function(e) {
+      e.preventDefault();
+      if(working) return false;
+
+      working = true;
+      $('#submit').val('Working..');
+      $('span.error').remove();
+
+
+      var formData = $(this).serialize();
+      console.log(formData);
+
+      $.ajax({
+            type: 'POST',
+            url: '/comment',
+            data: formData,
+
+           success: function(data){
+              //console.log(JSON.parse(data).html);
+              working = false;
+              $('#submit').val('Submit');
+            //   $(JSON.parse(data).html).hide().insertBefore('#addCommentContainer').slideDown();
+            //   $('#body').val('');
+
+              var msg = JSON.parse(data);
+
+                      if(msg.status){
+                          console.log('Info: ', msg.status);
+                          $(msg.html).hide().insertBefore('#addCommentContainer').slideDown();
+                          $('#body').val('');
+                      }
+                      else {
+                          console.log('Info: ', msg.status);
+                          $.each(msg.errors,function(k,v){
+                              $('label[for='+k+']').append('<span class="error">'+v+'</span>');
+                          });
+                      }
+           }
+      });
+    });
+
+
+    //
+    // $('#addCommentForm').submit(function(e){
+    //
+    //     e.preventDefault();
+    //     if(working) return false;
+    //
+    //     working = true;
+    //     $('#submit').val('Working..');
+    //     $('span.error').remove();
+    //
+    //     $.post('comment',$(this).serialize(),function(msg){
+    //
+    //         working = false;
+    //
+    //         $('#submit').val('Submit');
+    //
+    //         if(msg.status){
+    //             console.log('Info: ', msg.status);
+    //             /*
+    //             /	If the insert was successful, add the comment
+    //             /	below the last one on the page with a slideDown effect
+    //             /*/
+    //
+    //             $(msg.html).hide().insertBefore('#addCommentContainer').slideDown();
+    //             $('#body').val('');
+    //         }
+    //         else {
+    //             /*
+    //             /	If there were errors, loop through the
+    //             /	msg.errors object and display them on the page
+    //             /*/
+    //             console.log('Info: ', msg.status);
+    //
+    //             $.each(msg.errors,function(k,v){
+    //                 $('label[for='+k+']').append('<span class="error">'+v+'</span>');
+    //             });
+    //         }
+    //     },'json');
+    // });
+
+
+    //
 
     $('body').on('click', '.product .add', function () {
         var items = $cart.children(),

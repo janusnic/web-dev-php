@@ -179,6 +179,13 @@ class User {
         return true;
     }
 
+    public static function getName () {
+        if (Session::get('logged') == true) {
+            return self::getUserById(Session::get('userId'))['name'];
+        }
+        return true;
+    }
+
     /**
      * Вытягиваем информацию о пользователе по id
      *

@@ -50,8 +50,9 @@ return array(
     'admin/blog/delete/([0-9]+)' => 'adminBlog/delete/$1',
     'admin/blog' => 'adminBlog/index',
 
-    //'blog/([a-zA-Z0-9_-]+)' => 'blog/view/$1',
-    'blog/([0-9]+)' => 'blog/view/$1',
+    'blog/([a-zA-Z0-9_-]+)' => 'blog/view/$1',
+    //'blog/([0-9]+)' => 'blog/view/$1',
+    'comment' => 'comment/index',
 
     'blog' => 'blog/index',
 

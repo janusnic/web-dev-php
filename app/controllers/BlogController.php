@@ -18,13 +18,21 @@ class BlogController extends Controller {
         $this->_view->rendertemplate('footer',$data);
     }
 
-    public function actionView ($id){
-    //public function actionView ($slug){
 
-    //    $post = Blog::getPostBySlug($slug);
-     $post = Blog::getPostById($id);
+    public function actionView ($slug){
+
+        $post = Blog::getPostBySlug($slug);
+
+        $res = Comment::getCommentById($post['id']);
+
+        $comments = array();
+
+        foreach ($res as $row) {
+            $comments[] = new Comment($row);
+        }
 
         $data['post'] = $post;
+        $data['comments'] = $comments;
         $data['title'] = 'Post Page ';
         $this->_view->rendertemplate('header',$data);
         $this->_view->render('blog/view',$data);
@@ -32,5 +40,4 @@ class BlogController extends Controller {
 
     }
 
-
-}
+    }
