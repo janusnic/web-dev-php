@@ -50,6 +50,25 @@ img {
   white-space: nowrap;
 }
 
+.col, .col-12, .col-6, .col-7, .col-3, .col-5 {
+  padding:  0 1%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.col-12 { width: 100% }
+.col-11 { width: 91.6666666667% }
+.col-10 { width: 83.3333333333% }
+.col-9 { width: 75% }
+.col-8 { width: 66.6666666667% }
+.col-7 { width: 58.3333333333% }
+.col-6 { width: 50% }
+.col-5 { width: 41.6666666667% }
+.col-4 { width: 33.3333333333% }
+.col-3 { width: 25% }
+.col-2 { width: 16.6666666667% }
+.col-1 { width: 8.3333333333% }
+
 /* --------------------------------
 header
 -------------------------------- */
@@ -1515,10 +1534,7 @@ label span.error{
 	right:-10px;
 }
 
-#submit{
-
-	/* The submit button */
-
+#submit, .submit{
 	background-color:#58B9EB;
 	border:1px solid #40A2D4;
 	color:#FFFFFF;
@@ -1528,13 +1544,47 @@ label span.error{
 	font-weight:bold;
 	padding:4px;
 	margin-top:5px;
-
 	-moz-border-radius:4px;
 	-webkit-border-radius:4px;
 	border-radius:4px;
 }
 
-#submit:hover{
+#submit:hover, .submit:hover{
 	background-color:#80cdf5;
 	border-color:#52b1e2;
+}
+
+.form-wrap {
+	background: white;
+	padding: 2em;
+	margin: 2em auto;
+	height: auto !important;
+}
+.form-wrap input, .form-wrap textarea {
+    display: inline-block;
+	font-family: Helvetica, sans-serif;
+	font-size: 1.4em;
+	border: 2px solid #ccc;
+}
+
+.form-wrap textarea {
+	height: 6em;
+}
+
+.form-wrap textarea:focus, .form-wrap input:focus {
+	border: 2px solid #900;
+}
+
+.submit{
+    width: 50%;
+    display: block;
+    margin: 0.5em auto;
+}
+
+.form-wrap label {
+    display: inline-block;
+	font-size: 1.4em;
+}
+.form-group{
+    display: block;
 }

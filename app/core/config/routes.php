@@ -25,6 +25,8 @@ return array(
     // about
     'about' => 'about/index',
 
+    'contact' => 'contact/index',
+
     //Каталог
     'catalog/page-([0-9]+)' => 'catalog/index/$1',
     'catalog' => 'catalog/index',
